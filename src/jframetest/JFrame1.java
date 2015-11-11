@@ -13,17 +13,17 @@ import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-
 /**
  *
  * @author betsaue
  */
 public class JFrame1 extends javax.swing.JFrame {
-        
+
     Connection con;
     Statement stmt;
     ResultSet rs, rs1;
     int curRow = 0;
+
     /**
      * Creates new form JFrame1
      */
@@ -31,21 +31,19 @@ public class JFrame1 extends javax.swing.JFrame {
         initComponents();
         DoConnect();
     }
-    
-    public void DoConnect( ) {
+
+    public void DoConnect() {
         try {
-             String host = "jdbc:derby://localhost:1527/Db1";
-             String uName = "test";
-             String uPass= "admin";
-             
-             Connection con = DriverManager.getConnection(host, uName, uPass);
-             
+            String host = "jdbc:derby://localhost:1527/Db1";
+            String uName = "test";
+            String uPass = "admin";
+
+            Connection con = DriverManager.getConnection(host, uName, uPass);
+
              //Statement stmt = con.createStatement( );
-             //String SQL = "SELECT * FROM KUNDINFO";
-             //ResultSet rs = stmt.executeQuery( SQL );
-             
-             
-             /*while ( rs.next( ) ) {
+            //String SQL = "SELECT * FROM KUNDINFO";
+            //ResultSet rs = stmt.executeQuery( SQL );
+            /*while ( rs.next( ) ) {
              int OrderID1 = rs.getInt("OrderID");
              String OrderID = Integer.toString(OrderID1);
              String Förnamn = rs.getString("Förnamn");
@@ -54,14 +52,12 @@ public class JFrame1 extends javax.swing.JFrame {
              //System.out.println( OrderID + " " + Förnamn + " ");
              txt_Förnamn.setText(Förnamn);
              txt_Efternamn.setText(Efternamn);
-            }*/
-       }
-        catch ( SQLException err ) {
-            System.out.println( err.getMessage( ) );
+             }*/
+        } catch (SQLException err) {
+            System.out.println(err.getMessage());
         }
 
-}
-    
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -107,7 +103,9 @@ public class JFrame1 extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel7.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 102, 102));
         jLabel7.setText("MYSTIC PIZZA COMPANY");
+        jLabel7.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel1.setText("Order ID:");
 
@@ -131,6 +129,7 @@ public class JFrame1 extends javax.swing.JFrame {
         jLabel6.setIcon(new javax.swing.ImageIcon("/Users/betsaue/Documents/pizza.jpg")); // NOI18N
         jLabel6.setText("PIZZA ORDER SYSTEM");
 
+        Btn_NyOrder.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
         Btn_NyOrder.setText("Ny Order");
         Btn_NyOrder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -139,6 +138,11 @@ public class JFrame1 extends javax.swing.JFrame {
         });
 
         Btn_Avbryt.setText("Avbryt");
+        Btn_Avbryt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Btn_AvbrytActionPerformed(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Kund  Information", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 1, 13))); // NOI18N
 
@@ -181,7 +185,7 @@ public class JFrame1 extends javax.swing.JFrame {
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_Förnamn, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
+                        .addGap(43, 43, 43)
                         .addComponent(jLabel5)
                         .addGap(18, 18, 18)
                         .addComponent(txt_Efternamn, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -338,9 +342,6 @@ public class JFrame1 extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(186, 186, 186)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -354,18 +355,20 @@ public class JFrame1 extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGap(88, 88, 88)
                                 .addComponent(Btn_Orderbekräftelse)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(Btn_Avbryt, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(45, 45, 45)))
+                                .addGap(98, 98, 98)
+                                .addComponent(Btn_Avbryt, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(37, 37, 37)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(186, 186, 186)
+                        .addComponent(jLabel7)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -391,8 +394,8 @@ public class JFrame1 extends javax.swing.JFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(36, 36, 36)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Btn_Orderbekräftelse)
                             .addComponent(Btn_Avbryt))
                         .addGap(12, 12, 12))))
@@ -403,7 +406,7 @@ public class JFrame1 extends javax.swing.JFrame {
 
     private void txt_KostActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_KostActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_txt_KostActionPerformed
 
     private void CB_PizzaNamnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CB_PizzaNamnActionPerformed
@@ -412,162 +415,151 @@ public class JFrame1 extends javax.swing.JFrame {
 
     private void txt_OrderIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_OrderIDActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_txt_OrderIDActionPerformed
 
     private void CB_StorlekActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CB_StorlekActionPerformed
         // TODO add your handling code here:
         //Displays the cost of the selected pizza depending on its size.
-        String Small= null , Medium = null , Large=null, Family=null;
-        String itemText = (String)CB_Storlek.getSelectedItem();
-        
-        //String itemText1 = (String)CB_Antal.getSelectedItem();
+        String Small = null, Medium = null, Large = null, Family = null;
+        String itemText = (String) CB_Storlek.getSelectedItem();
 
-               
-        if(itemText == "Small"){ 
-         
-         txt_Kost.setText("100Kr per Pizza");
+        //String itemText1 = (String)CB_Antal.getSelectedItem();
+        if (itemText == "Small") {
+
+            txt_Kost.setText("100Kr per Pizza");
+        } else if (itemText == "Medium") {
+
+            txt_Kost.setText("200Kr per Pizza");
+        } else if (itemText == "Large") {
+
+            txt_Kost.setText("300Kr per Pizza");
         }
-        else if(itemText == "Medium"){ 
-         
-         txt_Kost.setText("200Kr per Pizza");
-        }
-        else if(itemText == "Large"){ 
-         
-         txt_Kost.setText("300Kr per Pizza");
-        }
-        if(itemText == "Family"){ 
-         
-         txt_Kost.setText("500Kr per Pizza");
+        if (itemText == "Family") {
+
+            txt_Kost.setText("500Kr per Pizza");
         }
     }//GEN-LAST:event_CB_StorlekActionPerformed
 
     private void Btn_LäggTillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_LäggTillActionPerformed
-       
+
         //Calculating kost and adding pixxa information into the JTable
-        String kost="null";
-        
-        DefaultTableModel model =  (DefaultTableModel) tbl_OrderInfo.getModel();
-        
+        String kost = "null";
+
+        DefaultTableModel model = (DefaultTableModel) tbl_OrderInfo.getModel();
+
         String antal1 = CB_Antal.getSelectedItem().toString();
-        try{
-                kost = txt_Kost.getText(0,3);
-        
-        
-        int kost1 = Integer.parseInt(antal1)* Integer.parseInt(kost);
-        String kost2 = String.valueOf(kost1);
-        
-        model.addRow(new Object[] { CB_PizzaNamn.getSelectedItem(),CB_Storlek.getSelectedItem(),CB_Antal.getSelectedItem().toString(),kost2});
-        
-             String host = "jdbc:derby://localhost:1527/Db1";
-             String uName = "test";
-             String uPass= "admin";
-             
-             Connection con = DriverManager.getConnection(host, uName, uPass);
-             
-             stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-             String SQL = "SELECT * FROM PIZZAORDERINFO";
-             ResultSet rs = stmt.executeQuery( SQL );
-             
-             //Checking if the PizzaOrderInfo table is empty 
-             if(!rs.next()){
-                 int OrderItem = 1;
-                 rs.moveToInsertRow();
-                 rs.updateInt("OrderItem", OrderItem);
-                }
-             else {
-                 //If table is not empty, fetches the last updated value of OrderItem
-                 rs.last();
-                 int OrderItem = rs.getInt("OrderItem");
-                 OrderItem++;
-                 rs.moveToInsertRow();
-                 rs.updateInt("OrderItem", OrderItem);
+        try {
+            kost = txt_Kost.getText(0, 3);
+
+            int kost1 = Integer.parseInt(antal1) * Integer.parseInt(kost);
+            String kost2 = String.valueOf(kost1);
+
+            model.addRow(new Object[]{CB_PizzaNamn.getSelectedItem(), CB_Storlek.getSelectedItem(), CB_Antal.getSelectedItem().toString(), kost2});
+
+            String host = "jdbc:derby://localhost:1527/Db1";
+            String uName = "test";
+            String uPass = "admin";
+
+            Connection con = DriverManager.getConnection(host, uName, uPass);
+
+            stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            String SQL = "SELECT * FROM PIZZAORDERINFO";
+            ResultSet rs = stmt.executeQuery(SQL);
+
+            //Checking if the PizzaOrderInfo table is empty 
+            if (!rs.next()) {
+                int OrderItem = 1;
+                rs.moveToInsertRow();
+                rs.updateInt("OrderItem", OrderItem);
+            } else {
+                //If table is not empty, fetches the last updated value of OrderItem
+                rs.last();
+                int OrderItem = rs.getInt("OrderItem");
+                OrderItem++;
+                rs.moveToInsertRow();
+                rs.updateInt("OrderItem", OrderItem);
             }
-            
-             int OrderID = Integer.parseInt(txt_OrderID.getText());
-             String PizzaNamn = CB_PizzaNamn.getSelectedItem().toString();
-             String Storlek = CB_Storlek.getSelectedItem().toString();
-             String Antal1 = CB_Antal.getSelectedItem().toString();
-             int Antal = Integer.parseInt(Antal1);
-             int Kost = Integer.parseInt(kost);
-           
+
+            int OrderID = Integer.parseInt(txt_OrderID.getText());
+            String PizzaNamn = CB_PizzaNamn.getSelectedItem().toString();
+            String Storlek = CB_Storlek.getSelectedItem().toString();
+            String Antal1 = CB_Antal.getSelectedItem().toString();
+            int Antal = Integer.parseInt(Antal1);
+            int Kost = Integer.parseInt(kost);
+
             rs.updateInt("OrderID", OrderID);
             rs.updateString("PizzaNamn", PizzaNamn);
             rs.updateString("Storlek", Storlek);
             rs.updateInt("Antal", Antal);
             rs.updateInt("Kost", Kost);
-         
+
             rs.insertRow();
-            
+
             stmt.close();
             rs.close();
-           
-       }
-        catch ( Exception err ) {
-            System.out.println( err.getMessage( ) );
+
+        } catch (Exception err) {
+            System.out.println(err.getMessage());
         }
- 
+
     }//GEN-LAST:event_Btn_LäggTillActionPerformed
 
     private void Btn_NyOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_NyOrderActionPerformed
-        
-            try{
-                String host = "jdbc:derby://localhost:1527/Db1";
-                String uName = "test";
-                String uPass= "admin";
-             
-                Connection con = DriverManager.getConnection(host, uName, uPass);
-                
-                stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-                String SQL = "SELECT * FROM KUNDINFO";
-                ResultSet rs = stmt.executeQuery( SQL );
-                
-                
-                //Checks if Kundinfo table is empty
-                if (rs == null || !rs.first()) {
-                    //If Empty sets order ID to 1
-                    int OrderID = 1;
-                    String OrderID1 = String.valueOf(OrderID);
-                    txt_OrderID.setText(OrderID1);
-                }
-                
-                else { 
-                    //Else fetches the last updated row from the kundinfo table and increments the orderID
-                    rs.last();
-                    int OrderID1 = rs.getInt("OrderID");
-                    String OrderID2 = String.valueOf(OrderID1);
 
-                    txt_OrderID.setText(OrderID2);
-                    String text = txt_OrderID.getText();     
-                    int count = Integer.parseInt(text);
-                    count++;
-                    String text1 = String.valueOf(count);
-                    txt_OrderID.setText(text1);
-                }
-                
-                stmt.close();
-                rs.close();
+        try {
+            String host = "jdbc:derby://localhost:1527/Db1";
+            String uName = "test";
+            String uPass = "admin";
 
+            Connection con = DriverManager.getConnection(host, uName, uPass);
+
+            stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            String SQL = "SELECT * FROM KUNDINFO";
+            ResultSet rs = stmt.executeQuery(SQL);
+
+            //Checks if Kundinfo table is empty
+            if (rs == null || !rs.first()) {
+                //If Empty sets order ID to 1
+                int OrderID = 1;
+                String OrderID1 = String.valueOf(OrderID);
+                txt_OrderID.setText(OrderID1);
+            } else {
+                //Else fetches the last updated row from the kundinfo table and increments the orderID
+                rs.last();
+                int OrderID1 = rs.getInt("OrderID");
+                String OrderID2 = String.valueOf(OrderID1);
+
+                txt_OrderID.setText(OrderID2);
+                String text = txt_OrderID.getText();
+                int count = Integer.parseInt(text);
+                count++;
+                String text1 = String.valueOf(count);
+                txt_OrderID.setText(text1);
+            }
+
+            stmt.close();
+            rs.close();
+
+        } catch (Exception err) {
+            System.out.println(err.getMessage());
         }
-        catch (Exception err ) {
-            System.out.println( err.getMessage( ) );
-        }
-            
-         //Clear all the text fields when the Button Ny Order is clicked.
-            txt_Förnamn.setText("");
-            txt_Efternamn.setText("");
-            txt_Kontakt.setText("");
-            txt_Adress.setText("");
-            txt_Pin.setText("");
-            txt_Kost.setText("");
-            CB_PizzaNamn.setSelectedIndex(0);
-            CB_Storlek.setSelectedIndex(0);
-            CB_Antal.setSelectedIndex(0);
-            
-            //Clears the Jtable when the Button Ny Order is clicked.
-            DefaultTableModel model =  (DefaultTableModel) tbl_OrderInfo.getModel();
-            model.setRowCount(0);
-  
+
+        //Clear all the text fields when the Button Ny Order is clicked.
+        txt_Förnamn.setText("");
+        txt_Efternamn.setText("");
+        txt_Kontakt.setText("");
+        txt_Adress.setText("");
+        txt_Pin.setText("");
+        txt_Kost.setText("");
+        CB_PizzaNamn.setSelectedIndex(0);
+        CB_Storlek.setSelectedIndex(0);
+        CB_Antal.setSelectedIndex(0);
+
+        //Clears the Jtable when the Button Ny Order is clicked.
+        DefaultTableModel model = (DefaultTableModel) tbl_OrderInfo.getModel();
+        model.setRowCount(0);
+
     }//GEN-LAST:event_Btn_NyOrderActionPerformed
 
     private void txt_EfternamnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_EfternamnActionPerformed
@@ -576,113 +568,142 @@ public class JFrame1 extends javax.swing.JFrame {
 
     private void txt_FörnamnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_FörnamnActionPerformed
         // TODO add your handling code here:
-        
-        
-        
+
+
     }//GEN-LAST:event_txt_FörnamnActionPerformed
 
     private void Btn_SparaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_SparaActionPerformed
         // TODO add your handling code here:
-         
-        try{
+
+        try {
             String host = "jdbc:derby://localhost:1527/Db1";
             String uName = "test";
-            String uPass= "admin";
-             
+            String uPass = "admin";
+
             Connection con = DriverManager.getConnection(host, uName, uPass);
-            
+
             stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-             String SQL = "SELECT * FROM KUNDINFO";
-             ResultSet rs = stmt.executeQuery( SQL );
-            
-           
+            String SQL = "SELECT * FROM KUNDINFO";
+            ResultSet rs = stmt.executeQuery(SQL);
+
             int OrderID = Integer.parseInt(txt_OrderID.getText());
             String Förnamn = txt_Förnamn.getText();
             String Efternamn = txt_Efternamn.getText();
             int Kontakt = Integer.parseInt(txt_Kontakt.getText());
             String Adress = txt_Adress.getText();
             int Pin = Integer.parseInt(txt_Pin.getText());
-            
-            
+
             rs.moveToInsertRow();
-            
+
             rs.updateInt("OrderID", OrderID);
             rs.updateString("Förnamn", Förnamn);
             rs.updateString("Efternamn", Efternamn);
             rs.updateInt("Kontakt", Kontakt);
             rs.updateString("Adress", Adress);
             rs.updateInt("Pin", Pin);
-            
-            
-            
+
             rs.insertRow();
-            
+
             stmt.close();
             rs.close();
-            
-        JOptionPane.showMessageDialog(this,"Kund Information har sparat!");
-            
-        }
-        catch (Exception err ) {
-            System.out.println( err.getMessage( ) );
+
+            JOptionPane.showMessageDialog(this, "Kund Information har sparat!");
+
+        } catch (Exception err) {
+            System.out.println(err.getMessage());
         }
     }//GEN-LAST:event_Btn_SparaActionPerformed
 
     private void Btn_OrderbekräftelseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_OrderbekräftelseActionPerformed
-        
+
         JFrame2 s = new JFrame2();
         s.setVisible(true);
         this.dispose();
-        
-        try{
+
+        try {
             String host = "jdbc:derby://localhost:1527/Db1";
             String uName = "test";
-            String uPass= "admin";
-             
-            Connection con = DriverManager.getConnection(host, uName, uPass);
-            
-            stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-             String SQL = "SELECT * FROM KUNDINFO";
-             ResultSet rs = stmt.executeQuery( SQL );
-        
-             rs.last();
-             
-             int OrderID1 = rs.getInt("OrderID");
-             String OrderID = String.valueOf(OrderID1);
-             JFrame2.txt_OrderID.setText(OrderID);
-             
-             
-             String Förnamn = rs.getString("Förnamn");
-             JFrame2.txt_Förnamn.setText(Förnamn);
-             
-             
-             String Efternamn = rs.getString("Efternamn");
-             JFrame2.txt_Efternamn.setText(Efternamn);
-             
-             int Kontakt1 = rs.getInt("Kontakt");
-             String Kontakt = String.valueOf(Kontakt1);
-             JFrame2.txt_Kontakt.setText(Kontakt);
-             
-             String Adress = rs.getString("Adress");
-             JFrame2.txt_Adress.setText(Adress);
-             
-             int Postkod1 = rs.getInt("Pin");
-             String Postkod = String.valueOf(Postkod1);
-             JFrame2.txt_Postkod.setText(Postkod);
-             
-             
-             
-              stmt.close();
-              rs.close();
+            String uPass = "admin";
 
+            Connection con = DriverManager.getConnection(host, uName, uPass);
+
+            stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            String SQL = "SELECT * FROM KUNDINFO";
+            ResultSet rs = stmt.executeQuery(SQL);
+            
+            rs.last();
+         
+            //Updating the orderbekräftelse från kund info table
+            int OrderID1 = rs.getInt("OrderID");
+            
+            String OrderID = String.valueOf(OrderID1);
+            JFrame2.txt_OrderID.setText(OrderID);
+           
+            String Förnamn = rs.getString("Förnamn");
+            JFrame2.txt_Förnamn.setText(Förnamn);
+            
+            String Efternamn = rs.getString("Efternamn");
+            JFrame2.txt_Efternamn.setText(Efternamn);
+
+            int Kontakt1 = rs.getInt("Kontakt");
+            String Kontakt = String.valueOf(Kontakt1);
+            JFrame2.txt_Kontakt.setText(Kontakt);
+
+            String Adress = rs.getString("Adress");
+            JFrame2.txt_Adress.setText(Adress);
+            
+            int Postkod1 = rs.getInt("Pin");
+            String Postkod = String.valueOf(Postkod1);
+            JFrame2.txt_Postkod.setText(Postkod);
+            
+            //Updating orderbekräftelse form with pizza information 
+            DefaultTableModel model = (DefaultTableModel) tbl_OrderInfo.getModel();
+            //obtain the row count in the jTable to get the correct number of for loops
+            int rowCount = model.getRowCount();
+            
+            for(int i=0;i<rowCount;i++){
+             JFrame2.tbl_OrderInfo.setValueAt(tbl_OrderInfo.getValueAt(i, 0).toString(), i, 0);
+             JFrame2.tbl_OrderInfo.setValueAt(tbl_OrderInfo.getValueAt(i, 1).toString(), i, 1);
+             JFrame2.tbl_OrderInfo.setValueAt(tbl_OrderInfo.getValueAt(i, 2).toString(), i, 2);
+             JFrame2.tbl_OrderInfo.setValueAt(tbl_OrderInfo.getValueAt(i, 3).toString(), i, 3);
+            }
+            
+            //Calculation of the total kostnad
+            int TotalKost = 0;
+            for(int i=0;i<rowCount;i++){
+            String Kost1 = tbl_OrderInfo.getValueAt(i, 3).toString();
+            int Kost = Integer.parseInt(Kost1);
+            TotalKost = Kost+TotalKost;
+            }
+            String TotalKostnad = String.valueOf(TotalKost);
+            JFrame2.txt_TotalKost.setText(TotalKostnad);
+            
+            //Update ORDERINFO table with total Kostnad per Order
+            String OrdID1 = txt_OrderID.getText();
+            int OrdID = Integer.parseInt(OrdID1);
+            
+            String SQL1 = "SELECT * FROM ORDERINFO";
+            ResultSet rs1 = stmt.executeQuery(SQL1);
+
+            rs1.moveToInsertRow();
+            rs1.updateInt("OrderID", OrdID);
+            rs1.updateDouble("TotalKostnad", TotalKost);
+            rs1.insertRow();
+            
+            stmt.close();
+            rs.close();
+            rs1.close();
+
+        } catch (Exception err) {
+            System.out.println(err.getMessage());
         }
-        catch (Exception err ) {
-            System.out.println( err.getMessage( ) );
-        }
-        
+
     }//GEN-LAST:event_Btn_OrderbekräftelseActionPerformed
-    
-    
+
+    private void Btn_AvbrytActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_AvbrytActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_Btn_AvbrytActionPerformed
+
     /**
      * @param args the command line arguments
      */
