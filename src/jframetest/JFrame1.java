@@ -40,9 +40,9 @@ public class JFrame1 extends javax.swing.JFrame {
              
              Connection con = DriverManager.getConnection(host, uName, uPass);
              
-             Statement stmt = con.createStatement( );
-             String SQL = "SELECT * FROM KUNDINFO";
-             ResultSet rs = stmt.executeQuery( SQL );
+             //Statement stmt = con.createStatement( );
+             //String SQL = "SELECT * FROM KUNDINFO";
+             //ResultSet rs = stmt.executeQuery( SQL );
              
              
              /*while ( rs.next( ) ) {
@@ -102,7 +102,7 @@ public class JFrame1 extends javax.swing.JFrame {
         Btn_LäggTill = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_OrderInfo = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        Btn_Orderbekräftelse = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -111,7 +111,6 @@ public class JFrame1 extends javax.swing.JFrame {
 
         jLabel1.setText("Order ID:");
 
-        txt_OrderID.setText("0");
         txt_OrderID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_OrderIDActionPerformed(evt);
@@ -325,7 +324,12 @@ public class JFrame1 extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jButton1.setText("Visa Order Summary");
+        Btn_Orderbekräftelse.setText("Orderbekräftelse");
+        Btn_Orderbekräftelse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Btn_OrderbekräftelseActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -356,7 +360,7 @@ public class JFrame1 extends javax.swing.JFrame {
                                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(88, 88, 88)
-                                .addComponent(jButton1)
+                                .addComponent(Btn_Orderbekräftelse)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(Btn_Avbryt, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(45, 45, 45)))
@@ -389,12 +393,10 @@ public class JFrame1 extends javax.swing.JFrame {
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
+                            .addComponent(Btn_Orderbekräftelse)
                             .addComponent(Btn_Avbryt))
                         .addGap(12, 12, 12))))
         );
-
-        jPanel3.getAccessibleContext().setAccessibleName("Pizza Information");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -441,22 +443,21 @@ public class JFrame1 extends javax.swing.JFrame {
     }//GEN-LAST:event_CB_StorlekActionPerformed
 
     private void Btn_LäggTillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_LäggTillActionPerformed
-        // TODO add your handling code here:
-        String antal2="null";
+       
+        //Calculating kost and adding pixxa information into the JTable
+        String kost="null";
         
         DefaultTableModel model =  (DefaultTableModel) tbl_OrderInfo.getModel();
         
         String antal1 = CB_Antal.getSelectedItem().toString();
         try{
-                antal2 = txt_Kost.getText(0,3);
+                kost = txt_Kost.getText(0,3);
         
         
-        int antal3 = Integer.parseInt(antal1)* Integer.parseInt(antal2);
-        String kost = String.valueOf(antal3);
+        int kost1 = Integer.parseInt(antal1)* Integer.parseInt(kost);
+        String kost2 = String.valueOf(kost1);
         
-        model.addRow(new Object[] { CB_PizzaNamn.getSelectedItem(),CB_Storlek.getSelectedItem(),CB_Antal.getSelectedItem().toString(),kost});
-        
-        
+        model.addRow(new Object[] { CB_PizzaNamn.getSelectedItem(),CB_Storlek.getSelectedItem(),CB_Antal.getSelectedItem().toString(),kost2});
         
              String host = "jdbc:derby://localhost:1527/Db1";
              String uName = "test";
@@ -468,95 +469,81 @@ public class JFrame1 extends javax.swing.JFrame {
              String SQL = "SELECT * FROM PIZZAORDERINFO";
              ResultSet rs = stmt.executeQuery( SQL );
              
-             rs.last();
-             
-             System.out.println(rs1);
-             int OrderItem1 = rs.getInt("OrderItem");
-             
-             //String OrderItem2 = String.valueOf(OrderItem1);
-             if(OrderItem1 == 0){
-                 OrderItem1++;
-                     
-             }
+             //Checking if the PizzaOrderInfo table is empty 
+             if(!rs.next()){
+                 int OrderItem = 1;
+                 rs.moveToInsertRow();
+                 rs.updateInt("OrderItem", OrderItem);
+                }
              else {
-                 OrderItem1++;
-                 
-             }
-             
-             
+                 //If table is not empty, fetches the last updated value of OrderItem
+                 rs.last();
+                 int OrderItem = rs.getInt("OrderItem");
+                 OrderItem++;
+                 rs.moveToInsertRow();
+                 rs.updateInt("OrderItem", OrderItem);
+            }
+            
              int OrderID = Integer.parseInt(txt_OrderID.getText());
              String PizzaNamn = CB_PizzaNamn.getSelectedItem().toString();
              String Storlek = CB_Storlek.getSelectedItem().toString();
              String Antal1 = CB_Antal.getSelectedItem().toString();
              int Antal = Integer.parseInt(Antal1);
              int Kost = Integer.parseInt(kost);
-             
-            rs.moveToInsertRow();
-            
-            //rs.updateInt("OrderItem", OrderItem);
-            rs.updateInt("OrderItem", OrderItem1);
+           
             rs.updateInt("OrderID", OrderID);
             rs.updateString("PizzaNamn", PizzaNamn);
             rs.updateString("Storlek", Storlek);
             rs.updateInt("Antal", Antal);
             rs.updateInt("Kost", Kost);
-            
-            
-            
+         
             rs.insertRow();
             
             stmt.close();
             rs.close();
            
-             
        }
         catch ( Exception err ) {
             System.out.println( err.getMessage( ) );
         }
-
-        
-        
+ 
     }//GEN-LAST:event_Btn_LäggTillActionPerformed
 
     private void Btn_NyOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_NyOrderActionPerformed
-        // TODO add your handling code here:
         
-             //Clear all the text fields when the Button Ny Order is clicked.
-            txt_Förnamn.setText("");
-            txt_Efternamn.setText("");
-            txt_Kontakt.setText("");
-            txt_Adress.setText("");
-            txt_Pin.setText("");
-            txt_Kost.setText("");
-            txt_OrderID.setText("");
-            
-            //Clears the Jtable when the Button Ny Order is clicked.
-            DefaultTableModel model =  (DefaultTableModel) tbl_OrderInfo.getModel();
-            model.setRowCount(0);
-            
             try{
                 String host = "jdbc:derby://localhost:1527/Db1";
                 String uName = "test";
                 String uPass= "admin";
              
                 Connection con = DriverManager.getConnection(host, uName, uPass);
-             
+                
                 stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
                 String SQL = "SELECT * FROM KUNDINFO";
                 ResultSet rs = stmt.executeQuery( SQL );
-             
-                //Fetches the latest updated Order Id from KundInfo Table.
-                rs.last();
+                
+                
+                //Checks if Kundinfo table is empty
+                if (rs == null || !rs.first()) {
+                    //If Empty sets order ID to 1
+                    int OrderID = 1;
+                    String OrderID1 = String.valueOf(OrderID);
+                    txt_OrderID.setText(OrderID1);
+                }
+                
+                else { 
+                    //Else fetches the last updated row from the kundinfo table and increments the orderID
+                    rs.last();
+                    int OrderID1 = rs.getInt("OrderID");
+                    String OrderID2 = String.valueOf(OrderID1);
 
-                int OrderID1 = rs.getInt("OrderID");
-                String OrderID = String.valueOf(OrderID1);
-
-                txt_OrderID.setText(OrderID);
-                String text = txt_OrderID.getText();     
-                int count = Integer.parseInt(text);
-                count++;
-                String text1 = String.valueOf(count);
-                txt_OrderID.setText(text1);
+                    txt_OrderID.setText(OrderID2);
+                    String text = txt_OrderID.getText();     
+                    int count = Integer.parseInt(text);
+                    count++;
+                    String text1 = String.valueOf(count);
+                    txt_OrderID.setText(text1);
+                }
                 
                 stmt.close();
                 rs.close();
@@ -565,6 +552,21 @@ public class JFrame1 extends javax.swing.JFrame {
         catch (Exception err ) {
             System.out.println( err.getMessage( ) );
         }
+            
+         //Clear all the text fields when the Button Ny Order is clicked.
+            txt_Förnamn.setText("");
+            txt_Efternamn.setText("");
+            txt_Kontakt.setText("");
+            txt_Adress.setText("");
+            txt_Pin.setText("");
+            txt_Kost.setText("");
+            CB_PizzaNamn.setSelectedIndex(0);
+            CB_Storlek.setSelectedIndex(0);
+            CB_Antal.setSelectedIndex(0);
+            
+            //Clears the Jtable when the Button Ny Order is clicked.
+            DefaultTableModel model =  (DefaultTableModel) tbl_OrderInfo.getModel();
+            model.setRowCount(0);
   
     }//GEN-LAST:event_Btn_NyOrderActionPerformed
 
@@ -588,7 +590,7 @@ public class JFrame1 extends javax.swing.JFrame {
             String uPass= "admin";
              
             Connection con = DriverManager.getConnection(host, uName, uPass);
-             
+            
             stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
              String SQL = "SELECT * FROM KUNDINFO";
              ResultSet rs = stmt.executeQuery( SQL );
@@ -625,6 +627,60 @@ public class JFrame1 extends javax.swing.JFrame {
             System.out.println( err.getMessage( ) );
         }
     }//GEN-LAST:event_Btn_SparaActionPerformed
+
+    private void Btn_OrderbekräftelseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_OrderbekräftelseActionPerformed
+        
+        JFrame2 s = new JFrame2();
+        s.setVisible(true);
+        this.dispose();
+        
+        try{
+            String host = "jdbc:derby://localhost:1527/Db1";
+            String uName = "test";
+            String uPass= "admin";
+             
+            Connection con = DriverManager.getConnection(host, uName, uPass);
+            
+            stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+             String SQL = "SELECT * FROM KUNDINFO";
+             ResultSet rs = stmt.executeQuery( SQL );
+        
+             rs.last();
+             
+             int OrderID1 = rs.getInt("OrderID");
+             String OrderID = String.valueOf(OrderID1);
+             JFrame2.txt_OrderID.setText(OrderID);
+             
+             
+             String Förnamn = rs.getString("Förnamn");
+             JFrame2.txt_Förnamn.setText(Förnamn);
+             
+             
+             String Efternamn = rs.getString("Efternamn");
+             JFrame2.txt_Efternamn.setText(Efternamn);
+             
+             int Kontakt1 = rs.getInt("Kontakt");
+             String Kontakt = String.valueOf(Kontakt1);
+             JFrame2.txt_Kontakt.setText(Kontakt);
+             
+             String Adress = rs.getString("Adress");
+             JFrame2.txt_Adress.setText(Adress);
+             
+             int Postkod1 = rs.getInt("Pin");
+             String Postkod = String.valueOf(Postkod1);
+             JFrame2.txt_Postkod.setText(Postkod);
+             
+             
+             
+              stmt.close();
+              rs.close();
+
+        }
+        catch (Exception err ) {
+            System.out.println( err.getMessage( ) );
+        }
+        
+    }//GEN-LAST:event_Btn_OrderbekräftelseActionPerformed
     
     
     /**
@@ -666,11 +722,11 @@ public class JFrame1 extends javax.swing.JFrame {
     private javax.swing.JButton Btn_Avbryt;
     private javax.swing.JButton Btn_LäggTill;
     private javax.swing.JButton Btn_NyOrder;
+    private javax.swing.JButton Btn_Orderbekräftelse;
     private javax.swing.JButton Btn_Spara;
-    private javax.swing.JComboBox CB_Antal;
-    private javax.swing.JComboBox CB_PizzaNamn;
-    private javax.swing.JComboBox CB_Storlek;
-    private javax.swing.JButton jButton1;
+    public javax.swing.JComboBox CB_Antal;
+    public javax.swing.JComboBox CB_PizzaNamn;
+    public javax.swing.JComboBox CB_Storlek;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
@@ -686,13 +742,13 @@ public class JFrame1 extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tbl_OrderInfo;
-    private javax.swing.JTextField txt_Adress;
-    private javax.swing.JTextField txt_Efternamn;
-    private javax.swing.JTextField txt_Förnamn;
-    private javax.swing.JTextField txt_Kontakt;
-    private javax.swing.JTextField txt_Kost;
-    private javax.swing.JTextField txt_OrderID;
-    private javax.swing.JTextField txt_Pin;
+    public javax.swing.JTable tbl_OrderInfo;
+    public javax.swing.JTextField txt_Adress;
+    public javax.swing.JTextField txt_Efternamn;
+    public javax.swing.JTextField txt_Förnamn;
+    public javax.swing.JTextField txt_Kontakt;
+    public javax.swing.JTextField txt_Kost;
+    public javax.swing.JTextField txt_OrderID;
+    public javax.swing.JTextField txt_Pin;
     // End of variables declaration//GEN-END:variables
 }
